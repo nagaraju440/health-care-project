@@ -18,6 +18,7 @@ import { loginSchema } from "@/lib/validation-schema/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { login } from "./action";
 
 const LoginPage = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -30,6 +31,7 @@ const LoginPage = () => {
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
     console.log(values);
+    await login(values);
   }
 
   return (
