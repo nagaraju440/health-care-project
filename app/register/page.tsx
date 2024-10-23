@@ -21,6 +21,8 @@ import { RadioGroup } from "@radix-ui/react-radio-group";
 import { RadioGroupItem } from "@/components/ui/radio-group";
 import { registerSchema } from "@/lib/validation-schema/register";
 import { Roles } from "@/lib/enums/role";
+import { handleSignUp } from "@/utils/auth/signup";
+import { signup } from "../login/action";
 
 const RegisterPage = () => {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -34,6 +36,7 @@ const RegisterPage = () => {
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     console.log(values);
+    await signup(values);
   }
 
   return (
