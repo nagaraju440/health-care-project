@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
-import SampleComponent from "@/components/Auth/SampleComponent";
 
 export default async function PrivatePage() {
   const supabase = createClient();
@@ -16,7 +15,6 @@ export default async function PrivatePage() {
   return (
     <div>
       <p>Hello {data.user.email}</p>
-      <SampleComponent />
     </div>
   );
 }
