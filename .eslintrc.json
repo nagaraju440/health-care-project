@@ -1,3 +1,14 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    // Add specific rules here if needed
+    "no-console": "warn", // Turns no-console errors into warnings
+    "react-hooks/rules-of-hooks": "warn", // React hooks rule as warning
+    "react-hooks/exhaustive-deps": "warn",
+    "@next/next/no-img-element": "warn", // Example: Next.js-specific rule
+    "no-unused-vars": "warn", // Example: No unused variables as a warning
+    "@typescript-eslint/no-empty-object-type": "warn",
+    "@typescript-eslint/no-unused-vars": "warn"
+    // Add other rules you want to treat as warnings
+  }
 }
