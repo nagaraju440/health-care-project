@@ -21,14 +21,29 @@ export async function login({
     password,
   };
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { error, data: authUserData } = await supabase.auth.signInWithPassword(
+    data
+  );
 
   if (error) {
     redirect("/error");
   }
 
+  const { data: userData } = await supabase
+    .from("user")
+    .select("*")
+    .eq("user_uuid", authUserData.user.id)
+    .single();
+
   revalidatePath("/", "layout");
-  redirect("/dashboard");
+
+  if (userData.role === "Doctor") {
+    redirect("/dashboard/doctor");
+  }
+
+  if (userData.role === "Patient") {
+    redirect("/dashboard/patient");
+  }
 }
 
 export async function signup({
@@ -132,7 +147,11 @@ export async function signup({
     console.log("error occueed", error);
     redirect("/error");
   }
-
   revalidatePath("/", "layout");
-  redirect("/dashboard");
+
+  if (role === "Doctor") {
+    redirect("/dashboard/doctor");
+  } else if (role === "Patient") {
+    redirect("/dashboard/patient");
+  }
 }

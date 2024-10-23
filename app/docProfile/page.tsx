@@ -15,31 +15,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { createClient } from "@/utils/supabase/client";
-import { useEffect } from "react";
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
-  const supabase=createClient()
-
-//   useEffect(() => {
-//     // Function to fetch data from an API
-//     const fetchData = async () => {
-//       try {
-//         let { data: appointments, error } = await supabase
-// .from('appointments')
-// .select('*')
-//     console.log(appointments)
-//       } catch (error) {
-//         console.error('Error fetching data:', error);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-
-        
-console.log("appointments",appointments)
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div>
       <Card>
@@ -67,9 +48,7 @@ console.log("appointments",appointments)
             </TableBody>
           </Table>
         </CardContent>
-        <CardFooter>
-          {/* <p>Card Footer</p> */}
-        </CardFooter>
+        <CardFooter>{/* <p>Card Footer</p> */}</CardFooter>
       </Card>
 
       <Card className="mt-4">
@@ -96,9 +75,7 @@ console.log("appointments",appointments)
             </TableBody>
           </Table>
         </CardContent>
-        <CardFooter>
-          {/* <p>Card Footer</p> */}
-        </CardFooter>
+        <CardFooter>{/* <p>Card Footer</p> */}</CardFooter>
       </Card>
     </div>
   );
