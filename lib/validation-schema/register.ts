@@ -6,7 +6,7 @@ const registerSchema = z.object({
   name: z
     .string({ required_error: "Name is required." })
     .trim()
-    .min(5, "Please enter name.")
+    .min(1, "Please enter name.")
     .max(255, "Input length exceeds limit.（255characters）"),
   email: z
     .string({ required_error: "Email is required." })
