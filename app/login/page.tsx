@@ -105,7 +105,7 @@ const LoginPage = () => {
 
               {/* Register Link */}
               <a
-                href="#"
+                href="/register"
                 className="text-sm text-indigo-600 hover:text-indigo-500"
               >
                 New User? Register here
