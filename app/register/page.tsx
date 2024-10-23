@@ -13,33 +13,35 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { loginSchema } from "@/lib/validation-schema/login";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { login } from "./action";
+import { RadioGroup } from "@radix-ui/react-radio-group";
+import { RadioGroupItem } from "@/components/ui/radio-group";
+import { registerSchema } from "@/lib/validation-schema/register";
+import { Roles } from "@/lib/enums/role";
+import { handleSignUp } from "@/utils/auth/signup";
+import { signup } from "../login/action";
 
-const LoginPage = () => {
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+const RegisterPage = () => {
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof loginSchema>) {
+  async function onSubmit(values: z.infer<typeof registerSchema>) {
     console.log(values);
-    await login(values);
+    await signup(values);
   }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <Card className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        {/* Logo */}
-
-        {/* Title */}
         <CardTitle className="text-center text-3xl font-extrabold text-gray-900">
           <Image
             src={logo}
@@ -48,13 +50,31 @@ const LoginPage = () => {
             alt="Logo"
             className="mx-auto"
           />
-          Login
+          Register
         </CardTitle>
 
         {/* Form */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <CardContent className="space-y-4">
+              {/* NameField */}
+              <FormField
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        id="name"
+                        placeholder="Name"
+                        className="mt-1 block w-full"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               {/* Email Field */}
               <FormField
                 name="email"
@@ -74,7 +94,6 @@ const LoginPage = () => {
                   </FormItem>
                 )}
               />
-
               {/* Password Field */}
               <FormField
                 name="password"
@@ -94,6 +113,42 @@ const LoginPage = () => {
                   </FormItem>
                 )}
               />
+              <FormField
+                name="role"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Role</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        className="flex flex-row items-center space-x-2 space-y-0"
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormItem className="flex flex-row items-center space-x-2 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value={Roles.DOCTOR} />
+                          </FormControl>
+                          <FormLabel className="font-normal">Doctor</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex flex-row items-center space-x-2 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value={Roles.PATIENT} />
+                          </FormControl>
+                          <FormLabel className="font-normal">Patient</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex flex-row items-center space-x-2 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value={Roles.OTHERS} />
+                          </FormControl>
+                          <FormLabel className="font-normal">Others</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </CardContent>
 
             {/* Submit Button */}
@@ -102,15 +157,15 @@ const LoginPage = () => {
                 type="submit"
                 className="w-full py-2 px-4 bg-lime-500 text-white hover:bg-lime-600"
               >
-                Login
+                Register
               </Button>
 
               {/* Register Link */}
               <a
-                href="/register"
+                href="/login"
                 className="text-sm text-indigo-600 hover:text-indigo-500"
               >
-                New User? Register here
+                Already have an account? Login here
               </a>
             </CardFooter>
           </form>
@@ -120,4 +175,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
